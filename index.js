@@ -30,6 +30,7 @@ async function run() {
     await client.connect();
 
     const clubsCollection = client.db('tarteeb').collection('clubs')
+    const bookingCollection = client.db('tarteeb').collection('bookings')
 
     // get all clubs data 
 
@@ -44,6 +45,14 @@ async function run() {
       const id = req.params.id
       const query = {_id: new ObjectId(id)}
       const result = await clubsCollection.findOne(query)
+      res.send(result)
+    })
+
+    // booking club
+
+    app.post('/booking', async(req, res)=>{
+      const bookingData = req.body
+      const result = await bookingCollection.insertOne(bookingData)
       res.send(result)
     })
 
